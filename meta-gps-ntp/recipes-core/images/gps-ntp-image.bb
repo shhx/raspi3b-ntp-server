@@ -16,6 +16,7 @@ IMAGE_INSTALL:append = " \
     pps-tools \
     kernel-modules \
     util-linux \
+    ntp-status-web \
     vim-tiny \
     procps \
 "

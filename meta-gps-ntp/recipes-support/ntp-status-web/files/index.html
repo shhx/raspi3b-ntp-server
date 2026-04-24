@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPS NTP Status</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body>
+  <div class="wrap">
+    <h1><span class="pulse"></span>GPS + Chrony NTP Status</h1>
+    <div class="meta">Live view, auto-refresh every 2 seconds</div>
+
+    <div class="badge-grid">
+      <section class="badge-card">
+        <h2 class="title">Clock Offset</h2>
+        <p id="badge-offset" class="state">Loading...</p>
+      </section>
+      <section class="badge-card">
+        <h2 class="title">Root Dispersion</h2>
+        <p id="badge-dispersion" class="state">Loading...</p>
+      </section>
+      <section class="badge-card">
+        <h2 class="title">RMS Offset</h2>
+        <p id="badge-rms" class="state">Loading...</p>
+      </section>
+      <section class="badge-card">
+        <h2 class="title">PPS Lock</h2>
+        <p id="badge-pps" class="state">Loading...</p>
+      </section>
+      <section class="badge-card">
+        <h2 class="title">Selected Source</h2>
+        <p id="badge-source" class="state">Loading...</p>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2 class="title">Chrony Daemon</h2>
+        <p id="chrony-daemon" class="state">Loading...</p>
+      </section>
+
+      <section class="card">
+        <h2 class="title">NTP Server (UDP/123)</h2>
+        <p id="ntp-server" class="state">Loading...</p>
+      </section>
+
+      <section class="card">
+        <h2 class="title">GPSD Daemon</h2>
+        <p id="gpsd-daemon" class="state">Loading...</p>
+      </section>
+
+      <section class="card">
+        <h2 class="title">GPS Fix</h2>
+        <p id="gps-fix" class="state">Loading...</p>
+      </section>
+    </div>
+
+    <section class="stack spacer-top">
+      <details class="panel" open>
+        <summary>NTP Timing and Accuracy</summary>
+        <div id="ntp-metrics-grid" class="kv-grid"></div>
+      </details>
+
+      <details class="panel">
+        <summary>NTP Server Counters</summary>
+        <div id="ntp-serverstats-grid" class="kv-grid"></div>
+      </details>
+
+      <details class="panel" open>
+        <summary>GPS Fix and Quality</summary>
+        <div id="gps-summary-grid" class="kv-grid"></div>
+      </details>
+
+      <details class="panel" open>
+        <summary>GPS Satellites and Signal Power</summary>
+        <div id="gps-satellites-table" class="table-wrap"></div>
+      </details>
+
+      <details class="panel" open>
+        <summary>Current Position Map</summary>
+        <div class="map-wrap">
+          <div id="gps-map" aria-label="Current GPS Position"></div>
+        </div>
+        <div id="gps-map-meta" class="mini-meta">Waiting for valid GPS fix...</div>
+      </details>
+
+      <details class="panel">
+          <summary>GPS Position and Motion</summary>
+          <div id="gps-position-grid" class="kv-grid"></div>
+      </details>
+
+      <details class="panel">
+        <summary>Chrony Sources</summary>
+        <div id="chrony-sources-list" class="source-list"></div>
+      </details>
+
+      <details class="panel" open>
+        <summary>System</summary>
+        <div class="kv-grid">
+          <div class="kv">
+            <span>Last Refresh (UTC)</span>
+            <strong id="last-refresh">n/a</strong>
+          </div>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="/app.js"></script>
+</body>
+</html>

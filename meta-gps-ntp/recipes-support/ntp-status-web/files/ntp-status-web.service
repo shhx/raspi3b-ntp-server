@@ -1,0 +1,13 @@
+[Unit]
+Description=NTP and GPS status web service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/ntp-status-web
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
