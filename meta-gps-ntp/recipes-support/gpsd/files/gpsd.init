@@ -1,0 +1,82 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          gpsd
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: GPS daemon
+### END INIT INFO
+
+DAEMON=/usr/sbin/gpsd
+DEFAULTS=/etc/default/gpsd
+
+START_DAEMON=true
+GPSD_OPTIONS="-n"
+DEVICES="/dev/serial0"
+GPSD_SOCKET="/var/run/gpsd.sock"
+
+[ -r "$DEFAULTS" ] && . "$DEFAULTS" || echo "Warning: $DEFAULTS not found, using defaults"
+
+start_gpsd() {
+    case "$START_DAEMON" in
+        true|yes|1) ;;
+        *)
+            echo "gpsd disabled by START_DAEMON=$START_DAEMON"
+            return 0
+            ;;
+    esac
+
+    if pidof gpsd >/dev/null 2>&1; then
+        echo "gpsd already running"
+        return 0
+    fi
+
+    [ -n "$GPSD_SOCKET" ] || GPSD_SOCKET="/var/run/gpsd.sock"
+    [ -n "$DEVICES" ] || DEVICES="/dev/serial0"
+
+    $DAEMON $GPSD_OPTIONS -F "$GPSD_SOCKET" $DEVICES
+}
+
+stop_gpsd() {
+    if ! pidof gpsd >/dev/null 2>&1; then
+        echo "gpsd not running"
+        return 0
+    fi
+
+    for pid in $(pidof gpsd); do
+        kill "$pid" || true
+    done
+}
+
+status_gpsd() {
+    if pidof gpsd >/dev/null 2>&1; then
+        echo "gpsd is running"
+        return 0
+    fi
+
+    echo "gpsd is not running"
+    return 3
+}
+
+case "$1" in
+    start)
+        start_gpsd
+        ;;
+    stop)
+        stop_gpsd
+        ;;
+    restart|force-reload)
+        stop_gpsd
+        start_gpsd
+        ;;
+    status)
+        status_gpsd
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|force-reload|status}"
+        exit 1
+        ;;
+esac
+
+exit $?
