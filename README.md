@@ -1,13 +1,14 @@
-# Raspberry Pi 3 GPS NTP Server (Yocto)
+# Raspberry Pi 3 GPS NTP Server
 
 This workspace now includes a custom layer, `meta-gps-ntp`, with an image recipe for
 a GPS-backed NTP server.
 
 ## Included custom image
-
 - Image recipe: `gps-ntp-image`
 - Time stack: `chrony` + `gpsd` + `pps-tools`
 - Raspberry Pi settings: UART enabled and PPS GPIO overlay enabled
+
+See [`meta-gps-ntp/README.md`](meta-gps-ntp/README.md) for details.
 
 ## Build
 
