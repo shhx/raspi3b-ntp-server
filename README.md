@@ -1,7 +1,6 @@
 # Raspberry Pi 3 GPS NTP Server
 
-This workspace now includes a custom layer, `meta-gps-ntp`, with an image recipe for
-a GPS-backed NTP server.
+Based on the custom layer, `meta-gps-ntp`.
 
 ## Included custom image
 - Image recipe: `gps-ntp-image`
